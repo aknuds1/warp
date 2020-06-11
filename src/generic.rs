@@ -28,10 +28,12 @@ pub trait Tuple: Sized {
     fn hlist(self) -> Self::HList;
 }
 
-// Combines Product together.
+/// Combines Products.
 pub trait Combine<T: HList> {
+    /// Output type.
     type Output: HList;
 
+    /// Combine with other product.
     fn combine(self, other: T) -> Self::Output;
 }
 
