@@ -1,3 +1,4 @@
+//! Filter traits.
 mod and;
 mod and_then;
 mod boxed;
@@ -32,15 +33,20 @@ use self::unify::Unify;
 use self::untuple_one::UntupleOne;
 pub(crate) use self::wrap::{Wrap, WrapSealed};
 
-// A crate-private base trait, allowing the actual `filter` method to change
-// signatures without it being a breaking change.
+/// Filter base trait, allowing the actual `filter` method to change
+/// signatures without it being a breaking change.
 pub trait FilterBase {
+    /// The extract type.
     type Extract: Tuple; // + Send;
+    /// The error type.
     type Error: IsReject;
+    /// The future type.
     type Future: Future<Output = Result<Self::Extract, Self::Error>> + Send;
 
+    /// Perform filtering.
     fn filter(&self, internal: Internal) -> Self::Future;
 
+    /// Map error.
     fn map_err<F, E>(self, _internal: Internal, fun: F) -> MapErr<Self, F>
     where
         Self: Sized,
@@ -54,16 +60,16 @@ pub trait FilterBase {
     }
 }
 
-// A crate-private argument to prevent users from calling methods on
-// the `FilterBase` trait.
-//
-// For instance, this innocent user code could otherwise call `filter`:
-//
-// ```
-// async fn with_filter<F: Filter>(f: F) -> Result<F::Extract, F::Error> {
-//     f.filter().await
-// }
-// ```
+/// A crate-private argument to prevent users from calling methods on
+/// the `FilterBase` trait.
+///
+/// For instance, this innocent user code could otherwise call `filter`:
+///
+/// ```
+/// async fn with_filter<F: Filter>(f: F) -> Result<F::Extract, F::Error> {
+///     f.filter().await
+/// }
+/// ```
 #[allow(missing_debug_implementations)]
 pub struct Internal;
 
@@ -401,6 +407,7 @@ pub trait Filter: FilterBase {
 
 impl<T: FilterBase> Filter for T {}
 
+/// FilterClone trait.
 pub trait FilterClone: Filter + Clone {}
 
 impl<T: Filter + Clone> FilterClone for T {}
