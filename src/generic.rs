@@ -14,10 +14,12 @@ pub enum Either<T, U> {
     B(U),
 }
 
-// Converts Product (and ()) into tuples.
+/// Converts Product (and ()) into tuples.
 pub trait HList: Sized {
+    /// Tuple type.
     type Tuple: Tuple<HList = Self>;
 
+    /// Flatten.
     fn flatten(self) -> Self::Tuple;
 }
 
