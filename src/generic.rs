@@ -21,10 +21,12 @@ pub trait HList: Sized {
     fn flatten(self) -> Self::Tuple;
 }
 
-// Typeclass that tuples can be converted into a Product (or unit ()).
+/// Typeclass that tuples can be converted into a Product (or unit ()).
 pub trait Tuple: Sized {
+    /// HList type.
     type HList: HList<Tuple = Self>;
 
+    /// Convert to HList.
     fn hlist(self) -> Self::HList;
 }
 
