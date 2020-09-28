@@ -1,3 +1,21 @@
+### v0.2.5 (August 31, 2020)
+
+- **Features**:
+  - Add `warp_fn`, which can be used to create a `Wrap` from a closure. These in turn are used with `Filter::with()`.
+  - Add `warp::host` filters to deal with `Host`/`:authority` headers.
+  - Relax some lifetime bounds on `Server`.
+- **Fixes**:
+  - Fix panic when URI doesn't have a slash (for example, `CONNECT foo.bar`).
+
+### v0.2.4 (July 20, 2020)
+
+- **Features**:
+  - Add `tracing` internals in place of `log` (log is still emitted for backwards compatibility).
+  - Add `warp::trace` module set of filters to customize `tracing` dianostics.
+  - Add `path` method to `warp::fs::File` reply.
+  - Add `source` implementation for `BodyDeserializeError`.
+  - Make `warp::ws::MissingConnectionUpgrade` rejection public.
+
 ### v0.2.3 (May 19, 2020)
 
 - **Features**:
