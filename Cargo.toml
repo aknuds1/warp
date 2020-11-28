@@ -17,7 +17,7 @@ edition = "2018"
 all-features = true
 
 [dependencies]
-async-compression = { version = "0.3.1", features = ["brotli", "deflate", "gzip", "stream"], optional = true }
+async-compression = { git = "https://github.com/aknuds1/async-compression", rev = "e4d903b8ff9972f056f714c61bd9d0f3321a4463", features = ["brotli", "deflate", "gzip", "stream"], optional = true }
 bytes = "0.6"
 futures = { version = "0.3", default-features = false, features = ["alloc"] }
 headers = "0.3"
@@ -39,7 +39,7 @@ tower-service = "0.3"
 tokio-tungstenite = { git = "https://github.com/snapview/tokio-tungstenite.git", rev = "71a5b72123db32b318d48964948fc76c943f1548", default-features = false, optional = true }
 percent-encoding = "2.1"
 pin-project = "1.0"
-tokio-rustls = { version = "0.14", optional = true }
+tokio-rustls = { version = "0.21", optional = true }
 
 [dev-dependencies]
 pretty_env_logger = "0.4"
@@ -47,7 +47,7 @@ tracing-subscriber = "0.2.7"
 tracing-log = "0.1"
 serde_derive = "1.0"
 handlebars = "3.0.0"
-tokio = { version = "0.2", features = ["macros"] }
+tokio = { version = "0.3", features = ["macros", "rt-multi-thread"] }
 listenfd = "0.3"
 
 [features]
@@ -78,7 +78,6 @@ required-features = ["compression"]
 
 [[example]]
 name = "unix_socket"
-required-features = ["tokio/uds"]
 
 [[example]]
 name = "websockets"
