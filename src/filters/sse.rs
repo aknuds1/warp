@@ -54,7 +54,7 @@ use hyper::Body;
 use pin_project::pin_project;
 use serde::Serialize;
 use serde_json;
-use tokio::time::{self, Delay};
+use tokio::time::{self, Sleep};
 
 use self::sealed::{
     BoxedServerSentEvent, EitherServerSentEvent, SseError, SseField, SseFormat, SseWrapper,
@@ -484,7 +484,7 @@ struct SseKeepAlive<S> {
     event_stream: S,
     comment_text: Cow<'static, str>,
     max_interval: Duration,
-    alive_timer: Delay,
+    alive_timer: Sleep,
 }
 
 #[doc(hidden)]
