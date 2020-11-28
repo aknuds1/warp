@@ -18,11 +18,11 @@ all-features = true
 
 [dependencies]
 async-compression = { version = "0.3.1", features = ["brotli", "deflate", "gzip", "stream"], optional = true }
-bytes = "0.5"
+bytes = "0.6"
 futures = { version = "0.3", default-features = false, features = ["alloc"] }
 headers = "0.3"
 http = "0.2"
-hyper = { git = "https://github.com/hyperium/hyper.git", rev = "1ba2a141a6f8736446ff4a0111df347c0dc66f6c", features = ["stream", "server", "http1", "http2"] }
+hyper = { git = "https://github.com/hyperium/hyper.git", rev = "1ba2a141a6f8736446ff4a0111df347c0dc66f6c", features = ["stream", "server", "http1", "http2", "tcp", "client"] }
 log = "0.4"
 mime = "0.3"
 mime_guess = "2.0.0"

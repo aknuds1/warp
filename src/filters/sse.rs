@@ -467,7 +467,7 @@ impl KeepAlive {
         S::Ok: ServerSentEvent + Send,
         S::Error: StdError + Send + Sync + 'static,
     {
-        let alive_timer = time::delay_for(self.max_interval);
+        let alive_timer = time::sleep(self.max_interval);
         SseKeepAlive {
             event_stream,
             comment_text: self.comment_text,
@@ -505,7 +505,7 @@ where
     let max_interval = keep_interval
         .into()
         .unwrap_or_else(|| Duration::from_secs(15));
-    let alive_timer = time::delay_for(max_interval);
+    let alive_timer = time::sleep(max_interval);
     SseKeepAlive {
         event_stream,
         comment_text: Cow::Borrowed(""),
