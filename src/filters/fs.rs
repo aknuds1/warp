@@ -5,13 +5,13 @@ use std::convert::Infallible;
 use std::fs::Metadata;
 use std::future::Future;
 use std::io;
+use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
 use std::pin::Pin;
 use std::sync::Arc;
-use std::task::{Poll, Context};
-use std::mem::MaybeUninit;
+use std::task::{Context, Poll};
 
-use bytes::{Bytes, BytesMut, BufMut};
+use bytes::{BufMut, Bytes, BytesMut};
 use futures::future::Either;
 use futures::{future, ready, stream, FutureExt, Stream, StreamExt, TryFutureExt};
 use headers::{
@@ -23,7 +23,7 @@ use hyper::Body;
 use mime_guess;
 use percent_encoding::percent_decode_str;
 use tokio::fs::File as TkFile;
-use tokio::io::{AsyncSeekExt, AsyncRead, ReadBuf};
+use tokio::io::{AsyncRead, AsyncSeekExt, ReadBuf};
 
 use crate::filter::{Filter, FilterClone, One};
 use crate::reject::{self, Rejection};
