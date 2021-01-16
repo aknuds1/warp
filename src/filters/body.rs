@@ -131,8 +131,8 @@ pub fn bytes() -> impl Filter<Extract = (Bytes,), Error = Rejection> + Copy {
 /// fn full_body(mut body: impl Buf) {
 ///     // It could have several non-contiguous slices of memory...
 ///     while body.has_remaining() {
-///         println!("slice = {:?}", body.bytes());
-///         let cnt = body.bytes().len();
+///         println!("slice = {:?}", body.chunk());
+///         let cnt = body.chunk().len();
 ///         body.advance(cnt);
 ///     }
 /// }
@@ -231,8 +231,8 @@ impl Decode for Json {
     const MIME: (mime::Name<'static>, mime::Name<'static>) = (mime::APPLICATION, mime::JSON);
     const WITH_NO_CONTENT_TYPE: bool = true;
 
-    fn decode<B: Buf, T: DeserializeOwned>(buf: B) -> Result<T, BoxError> {
-        serde_json::from_slice(buf.bytes()).map_err(Into::into)
+    fn decode<B: Buf, T: DeserializeOwned>(mut buf: B) -> Result<T, BoxError> {
+        serde_json::from_slice(&buf.copy_to_bytes(buf.remaining())).map_err(Into::into)
     }
 }
 
